@@ -1,16 +1,14 @@
 package fstestscode;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
-import io.restassured.RestAssured;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.lessThan;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
-import io.restassured.response.Response;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,11 +21,11 @@ public class FSClinicsTests {
 	public void setClinicHeader() throws MalformedURLException {
 
 		Header first = new Header("Content-Type",
-				ReadPathAndRouteFromPropertyFile.getContentType);
+				ReadConfigFromPropertyFile.getContentType);
 		Header second = new Header("X-API-Key",
-				ReadPathAndRouteFromPropertyFile.getXAPIKey);
+				ReadConfigFromPropertyFile.getXAPIKey);
 		Header third = new Header("X-FS-Clinic-Key",
-				ReadPathAndRouteFromPropertyFile.getXFSClinicKey);
+				ReadConfigFromPropertyFile.getXFSClinicKey);
 
 		headers = new Headers(first, second, third);
 
