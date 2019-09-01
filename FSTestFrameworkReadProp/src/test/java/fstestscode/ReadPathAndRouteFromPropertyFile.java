@@ -9,7 +9,7 @@ public class ReadPathAndRouteFromPropertyFile {
 			.readProperties("src/test/resources/route.properties");
 
 	// page URL
-	static String strNavigationURL = prop.getProperty("navigationURL");
+	static String baseURI = prop.getProperty("baseURI");
 
 	// Get fsLoginPage
 	static String getfsLoginPage = prop.getProperty("fsLoginPage");

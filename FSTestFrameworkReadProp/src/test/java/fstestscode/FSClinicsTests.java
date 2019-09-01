@@ -10,12 +10,13 @@ import io.restassured.http.Headers;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class FSClinicsTests {
 	Headers headers;
-	String strNavigationURL;
+	String baseURI;
 
 	@Before
 	public void setClinicHeader() throws MalformedURLException {
@@ -29,15 +30,14 @@ public class FSClinicsTests {
 
 		headers = new Headers(first, second, third);
 
-		strNavigationURL = ReadPathAndRouteFromPropertyFile.strNavigationURL
-				.trim();
+		baseURI = ReadPathAndRouteFromPropertyFile.baseURI.trim();
 
 	}
 
 	@Test
 	public void test_Clinic_id_is_correct() throws MalformedURLException {
 
-		String strURL = strNavigationURL
+		String strURL = baseURI
 				+ ReadPathAndRouteFromPropertyFile.getClinicDetails;
 
 		URL url = new URL(strURL);
@@ -52,7 +52,7 @@ public class FSClinicsTests {
 	@Test
 	public void test_the_page_and_Status_Code() throws MalformedURLException {
 
-		String strURL = strNavigationURL
+		String strURL = baseURI
 				+ ReadPathAndRouteFromPropertyFile.getClinicDetails;
 		URL url = new URL(strURL);
 
@@ -62,7 +62,7 @@ public class FSClinicsTests {
 	@Test
 	public void test_Clinic_Name_is_correct() throws MalformedURLException {
 
-		String strURL = strNavigationURL
+		String strURL = baseURI
 				+ ReadPathAndRouteFromPropertyFile.getClinicDetails;
 		URL url = new URL(strURL);
 
@@ -74,7 +74,7 @@ public class FSClinicsTests {
 	public void test_the_content_of_the_page_are_correct()
 			throws MalformedURLException {
 
-		String strURL = strNavigationURL
+		String strURL = baseURI
 				+ ReadPathAndRouteFromPropertyFile.getClinicDetails;
 		URL url = new URL(strURL);
 
@@ -89,7 +89,7 @@ public class FSClinicsTests {
 			throws MalformedURLException {
 		// dispensary_url":"https://us-snd.fullscript.io/login/flast"
 
-		String strURL = strNavigationURL
+		String strURL = baseURI
 				+ ReadPathAndRouteFromPropertyFile.getClinicDetails;
 		URL url = new URL(strURL);
 
@@ -103,11 +103,17 @@ public class FSClinicsTests {
 	public void test_Clinic_page_response_time_lessThan_2Second()
 			throws MalformedURLException {
 
-		String strURL = strNavigationURL
+		String strURL = baseURI
 				+ ReadPathAndRouteFromPropertyFile.getClinicDetails;
 		URL url = new URL(strURL);
 
 		given().headers(headers).get(url).then().time(lessThan(2000L));
+	}
+
+	@After
+	public void teardown_for_brands_on_the_Fullscript_platform() {
+		headers = null;
+		baseURI = null;
 	}
 
 }
