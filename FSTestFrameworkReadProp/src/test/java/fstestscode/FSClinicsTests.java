@@ -1,8 +1,7 @@
 package fstestscode;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.*;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 
@@ -27,16 +26,16 @@ public class FSClinicsTests {
 
 		headers = new Headers(first, second, third);
 
-		strNavigationURL = ReadPathAndRouteFromPropertyFile.strNavigationURL;
+		strNavigationURL = ReadPathAndRouteFromPropertyFile.strNavigationURL.trim();
 
 	}
 
 	@Test
 	public void test_Clinic_id_is_correct() throws MalformedURLException {
-
+		
 		String strURL = strNavigationURL + ReadPathAndRouteFromPropertyFile.getClinicDetails;
-		URL url = new URL(strURL);
 
+		URL url = new URL(strURL);
 		given().headers(headers)
 				.get(url)
 				.then()
@@ -46,14 +45,13 @@ public class FSClinicsTests {
 	}
 
 	@Test
-	public void test_URL_Correctness_With_Status_Code()
+	public void test_the_page_and_Status_Code()
 			throws MalformedURLException {
 
 		String strURL = strNavigationURL + ReadPathAndRouteFromPropertyFile.getClinicDetails;
 		URL url = new URL(strURL);
 
 		given().headers(headers).get(url).then().statusCode(200);
-
 	}
 
 	@Test
@@ -64,24 +62,35 @@ public class FSClinicsTests {
 
 		given().headers(headers).get(url).then().statusCode(200)
 				.body("clinic.name", equalTo("First Last's Dispensary"));
-
 	}
 
-	// @Test
-	// public void test_Clinic_dispensary_url_is_correct() throws
-	// MalformedURLException{
-	//
-	// String strURL = strNavigationURL + ReadPathProperties.getClinicDetails;
-	// URL url = new URL(strURL);
-	//
-	// given().
-	// headers(headers).
-	// get(url).
-	// then().
-	// statusCode(200).
-	// body("dispensary_url",contains("/flast"));
-	//
-	// }
+	 @Test
+	 public void test_the_content_of_the_page_are_correct() throws
+	 MalformedURLException{
+	
+	 String strURL = strNavigationURL + ReadPathAndRouteFromPropertyFile.getClinicDetails;
+	 URL url = new URL(strURL);
+	
+	 given().
+	 headers(headers).
+	 get(url).
+	 then().assertThat().body(containsString("flast"), containsString("fullscript"));
+	
+	 }
+	 
+//	 @Test // 
+//	 public void test_the_url_of_the_page_are_correct() throws
+//	 MalformedURLException{
+//	
+//	 String strURL = strNavigationURL + ReadPathAndRouteFromPropertyFile.getClinicDetails;
+//	 URL url = new URL(strURL);
+//	
+//	 given().
+//	 headers(headers).
+//	 get(url).
+//	 then().assertThat().body(url,"blahbla/flast");
+//	
+//	 }
 
 	@Test
 	public void test_Clinic_page_response_time_lessThan_2Second()

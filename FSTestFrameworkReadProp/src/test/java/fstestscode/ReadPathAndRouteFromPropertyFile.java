@@ -3,16 +3,28 @@ package fstestscode;
 import java.util.Properties;
 
 public class ReadPathAndRouteFromPropertyFile {
+	
+	// a call to read header
 	static Properties configProp = ReadPropertiesFileStream
 			.readProperties("src/test/resources/config.properties");
+	
+	// A call to read routes /URLS 
 	static Properties prop = ReadPropertiesFileStream
 			.readProperties("src/test/resources/route.properties");
-
+	
+	// page URL
 	static String strNavigationURL = prop.getProperty("navigationURL");
-
+	
+	// Get Content-Type
 	static String getContentType = configProp.getProperty("Content-Type");
+	
+	// Get X-API-Key
 	static String getXAPIKey = configProp.getProperty("X-API-Key");
+	
+	// Get X-FS-Clinic-Key
 	static String getXFSClinicKey = configProp.getProperty("X-FS-Clinic-Key");
+	
+	// Get fsLoginPage
 	static String getfsLoginPage = prop.getProperty("fsLoginPage");
 
 	// getAllPatients
