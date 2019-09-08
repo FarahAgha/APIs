@@ -54,5 +54,7 @@ public class ReadPathAndRouteFromPropertyFile {
 	// RetrieveSinglePractitioner
 	static String getRetrieveSinglePractitioner = prop
 			.getProperty("RetrieveSinglePractitioner");
+	
+	static String searchAPatient = prop.getProperty("searchAPatient");
 
 }
